@@ -20,11 +20,11 @@ Amikor magánszemélyek vagy cégek fotóst keresnek egy eseményre (esküvő, c
 
 | Réteg | Technológia | Főbb funkciók és jellemzők |
 | :--- | :--- | :--- |
-| **Adatbázis** | **MySQL** | Normalizált relációs adatbázis (`roles`, `accounts`, `profiles`, `companies`, `photos`, `photo_metadata`, `categories`, `photo_categories`, `inquiries`, `reviews`), puha törléssel (`deleted_at`) és archiválással (`archived_at`). |
-| **Backend (REST API)** | **Node.js (TypeScript + Express)** / **C# (ASP.NET Core)** | RESTful végpontok, JWT alapú autentikáció, szerepkör-alapú hozzáférés-vezérlés (RBAC), automatikus EXIF metaadat-kinyerés, bélyegkép-generálás (thumbnail) és Swagger/OpenAPI dokumentáció. |
+| **Adatbázis & Környezet** | **PostgreSQL + Docker + pgAdmin** | Konténerizált, normalizált relációs adatbázis (`roles`, `accounts`, `profiles`, `companies`, `photos`, `photo_metadata`, `categories`, `photo_categories`, `inquiries`, `reviews`), puha törléssel (`deleted_at`) és archiválással (`archived_at`). |
+| **Backend & ORM** | **NestJS (TypeScript) + Prisma ORM** | Moduláris REST API architektúra, típusbiztos Prisma adatbázis-réteg és migrációk, JWT autentikáció, szerepkör-alapú hozzáférés-vezérlés (RBAC), automatikus EXIF metaadat-kinyerés, bélyegkép-generálás és Swagger/OpenAPI dokumentáció. |
 | **Webes Kliens** | **React (Vite) + TypeScript** | Reszponzív portfólió- és kezelőfelület, szűrhető képgalériák, képfeltöltő űrlap automatikus EXIF-beolvasással, ajánlatkérés-kezelő és adminisztrátori moderációs panel. |
 | **Mobil Kliens** | **Android (Kotlin + Jetpack Compose)** | Képorientált natív mobilalkalmazás fotósok és portfóliók böngészéséhez, EXIF adatok megtekintéséhez, ajánlatkérések küldéséhez és a státuszok nyomon követéséhez. |
-| **Tesztelés** | **Jest / xUnit + Postman** | Automatizált backend egységtesztek (unit tests), Postman végpont-gyűjtemény és manuális tesztjegyzőkönyv. |
+| **Tesztelés** | **Jest + Postman** | Automatizált NestJS backend egységtesztek (unit & e2e tests), Postman végpont-gyűjtemény és manuális tesztjegyzőkönyv. |
 
 ---
 
@@ -33,9 +33,9 @@ Amikor magánszemélyek vagy cégek fotóst keresnek egy eseményre (esküvő, c
 Csapatunk a korábbi tanévben már sikeresen lefejlesztett egy közös szervizkezelő rendszert, így kiforrott munkamenettel és egyértelműen felosztott felelősségi körökkel dolgozunk:
 
 * **Szakács Vendel – Backend Mérnök & Adatbázis Felelős**
-  * Relációs adatbázis tervezése, migrációk és SQL dump kezelése.
-  * REST API architektúra kiépítése (Auth, RBAC, CRUD végpontok, ajánlatkérési folyamat).
-  * Képfeltöltés, fájlkezelés, automatikus EXIF metaadat-kinyerés, Swagger dokumentáció és backend unit tesztek.
+  * PostgreSQL adatbázis és Docker (pgAdmin) környezet összeállítása, Prisma ORM séma és migrációk kezelése.
+  * NestJS REST API architektúra kiépítése (Auth, RBAC, CRUD végpontok, ajánlatkérési folyamat).
+  * Képfeltöltés, fájlkezelés, automatikus EXIF metaadat-kinyerés, Swagger dokumentáció és Jest backend tesztek.
 * **Hajni – Web Frontend Fejlesztő (Fotós Portál & Admin Felület)**
   * Reszponzív webes felhasználói felület tervezése és fejlesztése (React + TypeScript).
   * Fotós portfóliókezelő, EXIF-adatokat megjelenítő képfeltöltő űrlap és ajánlatkezelő felület.
@@ -49,6 +49,7 @@ Csapatunk a korábbi tanévben már sikeresen lefejlesztett egy közös szervizk
 
 ## 🔄 Fejlesztési Folyamat és Eszközök
 
+* **Konténerizáció:** Docker Desktop (`docker-compose.yml` a PostgreSQL és pgAdmin egységes futtatásához).
 * **Projektmenedzsment:** GitHub Projects (Kanban tábla) a feladatok és sprintek követésére.
 * **Verziókezelés:** Git & GitHub – különálló moduláris repository-k, védett `main` ág, közös `dev` ág és feladatonkénti `feature/...` ágak Pull Request alapú kódellenőrzéssel.
 * **Kommunikáció:** Személyes egyeztetések és Discord.
